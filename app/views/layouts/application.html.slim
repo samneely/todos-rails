@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title Todos
+    = csrf_meta_tags
+
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+
+  body
+    h1.header
+      | Honey-do List
+    = yield
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
