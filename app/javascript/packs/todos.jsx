@@ -26,7 +26,7 @@ class Todos extends React.Component {
   }
 
   addTodoToList(todo) {
-    const todos = [...this.state.todos].concat(todo)
+    const todos = this.state.todos.concat(todo)
     this.setState({ todos })
 
     const titleInput = this.refs.titleInput
