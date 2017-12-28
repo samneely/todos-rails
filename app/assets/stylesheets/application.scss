@@ -23,21 +23,27 @@ body {
   width: 40%;
 }
 
-.todos__title-input {
-  @extend .col-sm-8;
-  padding-left: 0;
-}
+.todos {
+  &__title-input {
+    @extend .col-sm-8;
+    padding-left: 0;
+  }
 
-.todos__grid {
-  @extend .col-sm-10;
-  padding-left: 0;
-}
+  &__grid {
+    @extend .col-sm-10;
+    padding-left: 0;
+  }
 
-.todos__row {
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-  line-height: 30px;
-  margin-top: 5px;
+  &__row {
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    line-height: 30px;
+    margin-top: 5px;
+
+    & label {
+      font-weight: normal;
+    }
+  }
 }
 
 .todos__checkbox {
