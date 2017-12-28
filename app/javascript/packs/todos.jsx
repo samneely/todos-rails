@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import Todo from './todo'
+
 import {
   addTodo,
   setCallback
@@ -11,10 +13,16 @@ class Todos extends React.Component {
     super(props)
 
     this.createTodo = this.createTodo.bind(this)
+    this.removeTodoFromList = this.removeTodoFromList.bind(this)
     this.addTodoToList = this.addTodoToList.bind(this)
     this.state = {
       todos: props.todos
     }
+  }
+
+  removeTodoFromList(id) {
+    const todos = this.state.todos.filter((todo) => todo.id !== id)
+    this.setState({ todos})
   }
 
   addTodoToList(todo) {
@@ -63,10 +71,17 @@ class Todos extends React.Component {
             </div>
           </div>
         </form>
-        <div id='todos'>
+        <div
+          className='todos__grid'
+          id='todos'
+        >
           {
             todos.map((todo) => {
-              return <div key={todo.id}>{todo.title}</div>
+              return <Todo
+                key={todo.id}
+                removeTodoFromList={this.removeTodoFromList}
+                todo={todo}
+              />
             })
           }
         </div>
