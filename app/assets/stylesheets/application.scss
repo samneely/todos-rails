@@ -14,8 +14,16 @@
  *= require_self
  */
 
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+
 body {
   display: block;
   margin: auto;
   width: 40%;
+}
+
+.todos__title-input {
+  @extend .col-sm-8;
+  padding-left: 0;
 }

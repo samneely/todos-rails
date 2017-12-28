@@ -33,6 +33,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'bootstrap-sass', '~> 3.3.7'
 gem 'slim', '~> 3.0'
 
 group :development, :test do
@@ -45,6 +46,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6'
   gem 'factory_bot_rails', '~> 4.8'
 
+  gem 'launchy'
   gem 'pry'
   gem 'pry-byebug'
   gem 'pry-rails'
