@@ -22,6 +22,7 @@ RSpec.feature 'Todos list', type: :system do
   scenario 'User adds a todo to the list and then removes it' do
     todo = FactoryBot.build(:todo, title: 'Play videogames')
     visit todos_path
+    expect(page).to have_button('Add a honey-do', disabled: true)
 
     fill_in 'todo[title]', with: todo.title
     click_button 'Add a honey-do'

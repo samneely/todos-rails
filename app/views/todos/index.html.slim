@@ -1,2 +1,2 @@
-#todos_data data-todos=@todos.to_json
+#todos_data data-todos=@todos.to_json data-todo-max-length="#{Todo::TITLE_MAX_LENGTH}"
 = javascript_pack_tag 'todos', 'data-turbolinks-track': 'reload'
