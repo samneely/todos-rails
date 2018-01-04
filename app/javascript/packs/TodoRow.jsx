@@ -5,7 +5,7 @@ import {
   setCallback
 } from './client/todo_channel'
 
-class Todo extends React.Component {
+class TodoRow extends React.Component {
   constructor(props) {
     super(props)
 
@@ -42,4 +42,4 @@ class Todo extends React.Component {
   }
 }
 
-export default Todo
+export default TodoRow

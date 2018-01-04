@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import TodoRow from './TodoRow'
 import Todo from './todo'
 
 import {
@@ -15,28 +16,31 @@ class Todos extends React.Component {
     this.createTodo = this.createTodo.bind(this)
     this.removeTodoFromList = this.removeTodoFromList.bind(this)
     this.addTodoToList = this.addTodoToList.bind(this)
-    this.updateTodoLength = this.updateTodoLength.bind(this)
-    this.todoIsValid = this.todoIsValid.bind(this)
-    this.todoRemainingCharacters = this.todoRemainingCharacters.bind(this)
+    this.updateTodo = this.updateTodo.bind(this)
 
     this.state = {
       todos: props.todos,
-      todoTitleLength: 0
+      potentialTodo: new Todo({ maxLength: props.todoMaxLength })
     }
   }
 
   removeTodoFromList(id) {
     const todos = this.state.todos.filter((todo) => todo.id !== id)
-    this.setState({ todos})
+    this.setState({ todos })
   }
 
   addTodoToList(todo) {
     const todos = this.state.todos.concat(todo)
-    this.setState({ todos })
+    const potentialTodo = new Todo({ ...this.state.potentialTodo, title: '' })
 
-    const titleInput = this.refs.titleInput
-    titleInput.value = ''
-    titleInput.focus()
+    this.setState({
+      todos,
+      potentialTodo
+    }, () => {
+      const { titleInput } = this.refs
+      titleInput.value = potentialTodo.title
+      titleInput.focus()
+    })
   }
 
   createTodo(event) {
@@ -48,23 +52,17 @@ class Todos extends React.Component {
     setCallback(todo => this.addTodoToList(JSON.parse(todo)))
   }
 
-  updateTodoLength() {
-    const todoTitleLength = this.refs.titleInput.value.length
-    this.setState({ todoTitleLength })
-  }
-
-  todoIsValid() {
-    const { todoTitleLength } = this.state
-    if (todoTitleLength == 0) return false
-    return true
-  }
-
-  todoRemainingCharacters() {
-    return this.props.todoMaxLength - this.state.todoTitleLength
+  updateTodo() {
+    const { potentialTodo } = this.state
+    const title = this.refs.titleInput.value
+    this.setState({
+      potentialTodo: new Todo({ ...potentialTodo, title })
+    })
   }
 
   render() {
-    const { todos } = this.state
+    const { todos, potentialTodo } = this.state
+
     return (
       <div>
         <form
@@ -76,9 +74,9 @@ class Todos extends React.Component {
             <div className='todos__title-input'>
               <input
                 className='form-control'
-                maxLength={this.props.todoMaxLength}
+                maxLength={potentialTodo.maxLength}
                 name='todo[title]'
-                onKeyUp={this.updateTodoLength}
+                onKeyUp={this.updateTodo}
                 placeholder='Add a honey-do to the list'
                 ref='titleInput'
                 required
@@ -88,14 +86,14 @@ class Todos extends React.Component {
             <div className='col-auto'>
               <button
                 className='btn btn-primary'
-                disabled={!this.todoIsValid()}
+                disabled={potentialTodo.isInvalid()}
               >
                 Add a honey-do
               </button>
             </div>
           </div>
           <span className='todos__remaining-characters'>
-            Remaining Characters {this.todoRemainingCharacters()}
+            Remaining characters: {potentialTodo.remainingCharacters()}
           </span>
         </form>
         <div
@@ -104,7 +102,7 @@ class Todos extends React.Component {
         >
           {
             todos.map((todo) => {
-              return <Todo
+              return <TodoRow
                 key={todo.id}
                 removeTodoFromList={this.removeTodoFromList}
                 todo={todo}

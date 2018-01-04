@@ -23,6 +23,7 @@ RSpec.feature 'Todos list', type: :system do
     todo = FactoryBot.build(:todo, title: 'Play videogames')
     visit todos_path
     expect(page).to have_button('Add a honey-do', disabled: true)
+    expect(page).to have_content("Remaining characters: #{Todo::TITLE_MAX_LENGTH}")
 
     fill_in 'todo[title]', with: todo.title
     click_button 'Add a honey-do'
@@ -30,5 +31,7 @@ RSpec.feature 'Todos list', type: :system do
 
     check todo.title
     expect(page).to_not have_content todo.title
+    expect(page).to have_button('Add a honey-do', disabled: true)
+    expect(page).to have_content("Remaining characters: #{Todo::TITLE_MAX_LENGTH}")
   end
 end
